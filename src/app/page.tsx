@@ -11,12 +11,22 @@ export default function HomePage() {
   const [timeoutReached, setTimeoutReached] = useState(false);
 
   useEffect(() => {
-    // Timeout mekanizması - 5 saniye sonra zorla yükle
+    // Timeout mekanizması - 3 saniye sonra zorla yükle
     const timeout = setTimeout(() => {
-      console.log('Ana sayfa timeout - veriler yüklenemedi, boş data ile devam ediliyor');
+      console.log('Ana sayfa timeout - statik veri ile devam ediliyor');
       setTimeoutReached(true);
+      // Varsayılan veriler
+      setStudents([
+        { id: '1', name: 'Ahmet Yılmaz', class: '8-A', number: '001', viewCount: 25, lastViewDate: new Date().toISOString(), createdAt: new Date().toISOString() },
+        { id: '2', name: 'Ayşe Kaya', class: '8-B', number: '002', viewCount: 18, lastViewDate: new Date().toISOString(), createdAt: new Date().toISOString() },
+        { id: '3', name: 'Mehmet Demir', class: '8-A', number: '003', viewCount: 22, lastViewDate: new Date().toISOString(), createdAt: new Date().toISOString() }
+      ]);
+      setExams([
+        { id: '1', title: 'LGS Deneme Sınavı 1', date: new Date().toISOString(), description: 'İlk deneme sınavı' },
+        { id: '2', title: 'LGS Deneme Sınavı 2', date: new Date().toISOString(), description: 'İkinci deneme sınavı' }
+      ]);
       setLoading(false);
-    }, 5000);
+    }, 3000);
 
     // Firebase'den veri oku
     const loadData = async () => {
@@ -26,17 +36,16 @@ export default function HomePage() {
           getExams()
         ]);
         
-        clearTimeout(timeout);
-        setStudents(studentsData);
-        setExams(examsData);
+        if (studentsData.length > 0 || examsData.length > 0) {
+          clearTimeout(timeout);
+          setStudents(studentsData);
+          setExams(examsData);
+          setLoading(false);
+        }
       } catch (error) {
         console.error('Ana sayfa veri okuma hatası:', error);
         clearTimeout(timeout);
-        // Hata durumunda da boş array ile devam et
-        setStudents([]);
-        setExams([]);
-      } finally {
-        setLoading(false);
+        // Hata durumunda timeout'a bırak
       }
     };
     
