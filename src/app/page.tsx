@@ -22,6 +22,9 @@ export default function HomePage() {
         setExams(examsData);
       } catch (error) {
         console.error('Ana sayfa veri okuma hatası:', error);
+        // Hata durumunda da boş array ile devam et
+        setStudents([]);
+        setExams([]);
       } finally {
         setLoading(false);
       }
