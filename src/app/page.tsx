@@ -106,7 +106,7 @@ export default function HomePage() {
         {/* Başlık ve Logo */}
         <div className="text-center mb-8">
           <img
-            src="/logo.png"
+            src="/logo.svg"
             alt="Köprüler Ortaokulu"
             className="w-12 h-12 mx-auto mb-4 hover:scale-110 transition-transform duration-300 drop-shadow-xl"
           />
