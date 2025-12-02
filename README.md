@@ -1,6 +1,8 @@
-# Başarı Takip Sistemi
+# Köprüler LGS Portalı
 
-Modern bir öğrenci başarı takip sistemi uygulaması. Bu uygulama öğrencilerin sınav sonuçlarını takip etmesine, hedefler belirlemesine ve performans analizini gerçekleştirmesine olanak sağlar.
+Öğrencilerin LGS sınav başarılarını takip etmesi, hedefler belirlemesi ve performans analizini gerçekleştirmesi için modern bir portal uygulaması.
+
+<!-- Deployment trigger update: 2025-12-02 -->
 
 ## 🚀 Özellikler
 
