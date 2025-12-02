@@ -8,8 +8,16 @@ export default function HomePage() {
   const [students, setStudents] = useState<Student[]>([]);
   const [exams, setExams] = useState<Exam[]>([]);
   const [loading, setLoading] = useState(true);
+  const [timeoutReached, setTimeoutReached] = useState(false);
 
   useEffect(() => {
+    // Timeout mekanizması - 5 saniye sonra zorla yükle
+    const timeout = setTimeout(() => {
+      console.log('Ana sayfa timeout - veriler yüklenemedi, boş data ile devam ediliyor');
+      setTimeoutReached(true);
+      setLoading(false);
+    }, 5000);
+
     // Firebase'den veri oku
     const loadData = async () => {
       try {
@@ -18,10 +26,12 @@ export default function HomePage() {
           getExams()
         ]);
         
+        clearTimeout(timeout);
         setStudents(studentsData);
         setExams(examsData);
       } catch (error) {
         console.error('Ana sayfa veri okuma hatası:', error);
+        clearTimeout(timeout);
         // Hata durumunda da boş array ile devam et
         setStudents([]);
         setExams([]);
@@ -31,6 +41,8 @@ export default function HomePage() {
     };
     
     loadData();
+    
+    return () => clearTimeout(timeout);
   }, []);
 
   // İstatistikler
@@ -85,12 +97,13 @@ export default function HomePage() {
     'from-teal-500 to-teal-600'
   ];
 
-  if (loading) {
+  if (loading && !timeoutReached) {
     return (
       <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
           <p className="mt-4 text-gray-600">Yükleniyor...</p>
+          {timeoutReached && <p className="text-sm text-gray-500 mt-2">Bağlantı zaman aşımına uğradı, varsayılan veriler gösteriliyor...</p>}
         </div>
       </main>
     );
