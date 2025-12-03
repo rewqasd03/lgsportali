@@ -127,3 +127,5 @@ export default function HomePage() {
     </main>
   );
 }
+
+// ✅ VERCEL DEPLOYMENT TEST - Güncel Kod Yüklenmesi Durumu
